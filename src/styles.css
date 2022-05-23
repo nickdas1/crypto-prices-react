@@ -72,3 +72,8 @@ th {
   padding: 40px 0;
   text-align: center;
 }
+
+button:disabled {
+  background: gray;
+  pointer-events: none;
+}

@@ -15,8 +15,10 @@ const SYMBOLS = Object.keys(CURRENCY_NAMES);
 function App() {
   const [currencies, setCurrencies] = useState([]);
   const [refreshData, setRefreshData] = useState(false);
+  const [isButtonDisabled, setButtonDisabled] = useState(false);
 
   useEffect(() => {
+    setButtonDisabled(true);
     fetch("https://api2.binance.com/api/v3/ticker/24hr")
       .then((res) => res.json())
       .then((data) => {
@@ -24,6 +26,7 @@ function App() {
           data.filter((currency) => SYMBOLS.includes(currency.symbol))
         );
         setRefreshData(false);
+        setButtonDisabled(false);
       });
   }, [refreshData]);
 
@@ -37,7 +40,7 @@ function App() {
       </nav>
       <div className="main-content">
         <h2>Today's cryptocurrency prices</h2>
-        <button className="refreshButton" onClick={() => setRefreshData(true)}>Refresh Data</button>
+        <button disabled={isButtonDisabled} className="refreshButton" onClick={() => setRefreshData(true)}>Refresh Data</button>
         <table>
           <thead>
             <tr>
